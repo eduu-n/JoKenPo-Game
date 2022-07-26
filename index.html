@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>JoKenPo Game</title>
+</head>
+<body class="bg-gray-800 flex justify-center">
+    <div id="mainCard" class="w-80 m-5 rounded-2xl bg-slate-100">
+        <div id="title" class="font-mono text-2xl flex justify-center p-5">
+            JoKenPo Game
+        </div>
+        <div id="selection" class="font-mono text-sm text-slate-800 flex flex-col justify-center text-center items-center">
+            <div id="scoreTitle" class="text-xl">
+                SCORE
+            </div>
+            <div id="scoreCounter" class="w-80 mt-2 flex justify-around text-xl">
+                <div id="playerScore">
+                    <p>YOU:</p>
+                    <p>0</p>
+                </div>
+                <div id="botScore">
+                    <p>BOT:</p>
+                    <p>0</p>
+                </div>
+            </div>
+            <div class="p-3">
+                CHOOSE YOUR MOVE:
+            </div>
+            <button type="button" onclick="playGame(this.id)" id="rock" class="w-40 my-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                &#128074 ROCK &#128074
+            </button>
+            <button type="button" onclick="playGame(this.id)" id="paper" class="w-40 my-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                &#129306 PAPER &#129306
+            </button>
+            <button type="button" onclick="playGame(this.id)" id="scissor" class="w-40 my-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                &#129310 SCISSOR &#129310
+            </button>
+            <div id="showResults" class="p-3 my-2 flex flex-col gap-2 h-28">
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+<script>
+    const showResults = document.getElementById('showResults')
+    const playerScore = document.getElementById('playerScore')
+    const botScore = document.getElementById('botScore')
+    var playerPoints = []
+    var botPoints = []
+
+    function playGame(id) {
+        const botSelection = ["rock", "paper", "scissor"];
+        const random = Math.floor(Math.random() * botSelection.length);
+        const botMove = botSelection[random]
+
+        var result = ''
+
+        if (id === 'rock' && botMove === 'rock') {
+            var result = 'draw'
+        } else if (id === 'rock' && botMove === 'paper') {
+            var result = 'you lose'
+            botPoints.push('1')
+        } else if (id === 'rock' && botMove === 'scissor') {
+            var result = 'you win'
+            playerPoints.push('1')
+        }
+
+        if (id === 'paper' && botMove === 'paper') {
+            var result = 'draw'
+        } else if (id === 'paper' && botMove === 'scissor') {
+            var result = 'you lose'
+            botPoints.push('1')
+        } else if (id === 'paper' && botMove === 'rock') {
+            var result = 'you win'
+            playerPoints.push('1')
+        }
+
+        if (id === 'scissor' && botMove === 'scissor') {
+            var result = 'draw'
+        } else if (id === 'scissor' && botMove === 'rock') {
+            var result = 'you lose'
+            botPoints.push('1')
+        } else if (id === 'scissor' && botMove === 'paper') {
+            var result = 'you win'
+            playerPoints.push('1')
+        }
+        showResults.innerHTML = `<p>Your move: ${id}</p>`
+        setTimeout(() => {showResults.innerHTML = `<p>Your move: ${id}</p><p>Bot move: &#128347</p>`}, 500)
+        setTimeout(() => {showResults.innerHTML = `<p>Your move: ${id}</p><p>Bot move: &#128338</p>`}, 1000)
+        setTimeout(() => {showResults.innerHTML = `<p>Your move: ${id}</p><p>Bot move: &#128341</p>`}, 1500)
+        setTimeout(() => {showResults.innerHTML = `<p>Your move: ${id}</p><p>Bot move: &#128344</p>`}, 2000)
+        setTimeout(() => {showResults.innerHTML = `<p>Your move: ${id}</p><p>Bot move: &#128347</p>`}, 2500)
+        setTimeout(() => {showResults.innerHTML = `<p>Your move: ${id}</p><p>Bot move: ${botMove}</p>`}, 3000)
+        setTimeout(() => {
+            showResults.innerHTML = `<p>Your move: ${id}</p><p>Bot move: ${botMove}</p><p>Result: ${result.toUpperCase()}!!</p>`
+            playerScore.innerHTML = `<p>YOU:</p><p>${playerPoints.length}</p>`
+            botScore.innerHTML = `<p>BOT:</p><p>${botPoints.length}</p>`}, 3500)
+    }
+</script>
